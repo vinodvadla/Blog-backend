@@ -1,5 +1,5 @@
 let Blog = require('../Models/BlogModel')
-let url = "http://localhost:5000/uploads/"
+let url = "https://blog-it-pvqc.onrender.com/uploads/"
 const uploadImage = async (req, res) => {
     try {
         let { title, description } = req.body
