@@ -11,12 +11,28 @@ const addComment = async (req, res) => {
             body: body
         })
         await comment.save()
-        res.status(200).json({ message: "Commented Successfully" })
-
+        let comments = await Comment.find({ blog_id: blogId })
+        res.status(200).json({ comments: comments })
     } catch (error) {
         res.status(404).josn({ error: error.message })
     }
 }
 
 
-module.exports = { addComment }
+
+const deleteComm = async (req, res) => {
+    try {
+        let id = req.params.id
+        let comm = await Comment.findOne({ _id: id })
+        let blog_id = comm.blog_id
+        await Comment.deleteOne({ _id: id })
+        console.log("deleted")
+        let comments = await Comment.find({ blog_id })
+        res.status(200).json({ comments })
+    } catch (error) {
+        res.status(500).json({ error: error.message })
+    }
+}
+
+
+module.exports = { addComment, deleteComm }

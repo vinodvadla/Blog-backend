@@ -1,4 +1,5 @@
 let Blog = require('../Models/BlogModel')
+let Comment = require('../Models/commentModel')
 let url = "https://blog-it-pvqc.onrender.com/uploads/"
 const uploadImage = async (req, res) => {
     try {
@@ -45,6 +46,7 @@ const deleteOne = async (req, res) => {
             return res.status(404).json({ error: "blog not exists" })
         }
         await Blog.deleteOne({ _id: id })
+        await Comment.deleteMany({blog_id:id})
         res.status(200).json({ success: true })
     } catch (error) {
         res.status(500).json({ error: error.message })
